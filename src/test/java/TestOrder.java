@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+
 public class TestOrder {
 
     private WebDriver driver;
@@ -27,7 +28,7 @@ public class TestOrder {
     }
 
     @Test
-    public void test() {
+    public void testOne() {
        driver.get("http://localhost:9999/");
        List<WebElement> inputFields = driver.findElements(By.className("input__control"));
        inputFields.get(0).sendKeys("лапенко");
