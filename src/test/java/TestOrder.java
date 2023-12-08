@@ -19,11 +19,6 @@ public class TestOrder {
 
     private WebDriver driver;
 
-    @BeforeAll
-    static void configureDriver() {
-        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
-    }
-
     @BeforeEach
     void createBrowser() {
         driver = new ChromeDriver();
