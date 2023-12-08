@@ -1,45 +1,20 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
-import javax.swing.text.html.Option;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 
 public class TestOrder {
 
-
-    private WebDriver driver;
-
-    @BeforeEach
-    void createBrowser() {
-        driver = new ChromeDriver();
-    }
-
-    @AfterEach
-    void tearDown() {
-        driver.quit();
-        driver = null;
-    }
-
     @Test
-    public void testOne() {
-        driver.get("http://localhost:9999/");
-        List<WebElement> inputFields = driver.findElements(By.className("input__control"));
-        inputFields.get(0).sendKeys("лапенко");
-        inputFields.get(1).sendKeys("+79998887766");
-        driver.findElement(By.className("checkbox__box")).click();
-        driver.findElement(By.className("button")).click();
-        String actual = driver.findElement(By.cssSelector("[data-test-id=\"order-success\"]")).getText();
-        String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-        assertEquals(expected, actual.strip());
+    void orderTest() {
+        open("http://localhost:9999/");
+        $("[data-test-id=\"name\"] input").sendKeys("Лапенко Антон");
+        $("[data-test-id=\"phone\"] input").sendKeys("+79998887766");
+        $("[data-test-id=\"agreement\"] span").click();
+        $(By.className("button")).click();
+        $("[data-test-id=\"order-success\"]").shouldHave(Condition.text("Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."));
     }
 }
