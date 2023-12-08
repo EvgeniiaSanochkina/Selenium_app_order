@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,15 +17,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestOrder {
 
 
-
     private WebDriver driver;
+
+    @BeforeAll
+    static void configureDriver() {
+        System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+    }
 
     @BeforeEach
     void createBrowser() {
         driver = new ChromeDriver();
     }
 
-  @AfterEach
+    @AfterEach
     void tearDown() {
         driver.quit();
         driver = null;
@@ -32,14 +37,14 @@ public class TestOrder {
 
     @Test
     public void testOne() {
-       driver.get("http://localhost:9999/");
-       List<WebElement> inputFields = driver.findElements(By.className("input__control"));
-       inputFields.get(0).sendKeys("лапенко");
-       inputFields.get(1).sendKeys("+79998887766");
-       driver.findElement(By.className("checkbox__box")).click();
-       driver.findElement(By.className("button")).click();
-       String actual = driver.findElement(By.cssSelector("[data-test-id=\"order-success\"]")).getText();
-       String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-       assertEquals(expected, actual.strip());
+        driver.get("http://localhost:9999/");
+        List<WebElement> inputFields = driver.findElements(By.className("input__control"));
+        inputFields.get(0).sendKeys("лапенко");
+        inputFields.get(1).sendKeys("+79998887766");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
+        String actual = driver.findElement(By.cssSelector("[data-test-id=\"order-success\"]")).getText();
+        String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
+        assertEquals(expected, actual.strip());
     }
 }
